@@ -1,0 +1,20 @@
+# Node.js
+node_modules/
+
+# Arquivos de ambiente
+.env
+
+# Arquivos de compilação e logs
+/build/
+/logs/
+/dist/
+
+# Dependências do cliente React
+/client/node_modules/
+
+# Dependências do servidor Node.js
+/server/node_modules/
+
+# Arquivos de configuração do sistema (se aplicável)
+.DS_Store
+Thumbs.db
