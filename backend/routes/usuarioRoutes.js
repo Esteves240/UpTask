@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
+import { resgistrar } from "../controllers/usuarioController.js";
 
-router.get('/', (req, res) => {
-    res.send("Desde API/USUARIOS");
-});
+//Criação, Registo e Confirmação de Users
+router.post("/", resgistrar); //Cria um novo user
 
-export default router
+export default router;
