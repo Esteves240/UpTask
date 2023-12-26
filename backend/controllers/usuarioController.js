@@ -22,7 +22,20 @@ const resgistrar = async (req, res) => {
 
 
 const autenticar = async (req, res) => {
+    const {email, password} = req.body
 
+    //Comprovar se o user existe
+    const usuario = await Usuario.findOne({ email });
+    if (!usuario) {
+        const error = new Error("O usuario não está registrado");
+        return res.status(404).json({ msg: error.message });
+    }
+    //Comprovar se o user está confirmado
+    if (!usuario.confirmado) {
+        const error = new Error("A tua conta não foi confirmada");
+        return res.status(403).json({ msg: error.message });
+    }
+    //Comprovar password
 }
 
 export {
