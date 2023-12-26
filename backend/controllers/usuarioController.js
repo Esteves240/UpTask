@@ -17,12 +17,15 @@ const resgistrar = async (req, res) => {
         res.json(usuarioAlmacenado);
     }catch (error){
         console.log(error)
-    }
-
-    
+    } 
 };
 
 
+const autenticar = async (req, res) => {
+
+}
+
 export {
-   resgistrar
+   resgistrar,
+   autenticar
 }
