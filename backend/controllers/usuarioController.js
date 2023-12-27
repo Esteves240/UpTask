@@ -68,8 +68,26 @@ const confirmar = async (req, res) => {
     }
 };
 
+const olvidePassword = async (req, res) => {
+    const { email } = req.body;
+    const usuario = await Usuario.findOne({ email });
+    if (!usuario) {
+        const error = new Error("O usuario não está registrado");
+        return res.status(404).json({ msg: error.message });
+    }
+
+    try {
+        usuario.token = generarId();
+        await usuario.save();
+        res.json({ msg: "Foi enviado um email para restaurar a sua palavra-passe."});
+    } catch (error){
+        console.log(error)
+    }
+};
+
 export {
    resgistrar,
    autenticar,
-   confirmar
+   confirmar,
+   olvidePassword
 };
