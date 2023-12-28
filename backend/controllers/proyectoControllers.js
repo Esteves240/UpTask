@@ -1,4 +1,5 @@
 import Proyecto from "../models/Proyecto.js";
+import Tarea from "../models/Tarea.js";
 
 const obtenerProyectos = async (req, res) => {
     const proyectos = await Proyecto.find().where('creador').equals(req.usuario);
@@ -97,7 +98,21 @@ const agregarColaborador = async (req, res) => {};
 
 const eliminarColaborador = async (req, res) => {};
 
-const obtenerTareas = async (req, res) => {};
+const obtenerTareas = async (req, res) => {
+    //Obter o Id do projeto
+    const { id } = req.params;
+
+    //Buscar o pojeto na BD
+    const existeProyecto = await Proyecto.findById(id);
+    if (!existeProyecto) {
+        const error = new Error("Projecto não encontrado");
+        return res.status(404).json({msg: error.message});
+    }
+
+    //Tens que ser o criador do pojeto ou colaborador
+    const tareas = await Tarea.find().where('proyecto').equals(id)
+    res.json(tareas);
+};
 
 export {
     obtenerProyectos,
