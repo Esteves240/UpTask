@@ -82,7 +82,33 @@ const actualizarTarea = async (req, res) => {
     }
 };
 
-const eliminarTarea = async (req, res) => {};
+const eliminarTarea = async (req, res) => {
+   //identificar a tarefa
+   const { id } = req.params;
+
+   //consular a existência da tarefa na base de dados
+   const tarea = await Tarea.findById(id).populate('proyecto');
+
+   //caso a tarefa não exista
+   if(!tarea){
+       const error = new Error('A tarefa não existe :(');
+       return res.status(404).json({msg: error.message});
+   }
+
+   //erro para quando não seja o criador a aceder à tarefa
+   if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
+       const error = new Error("Acção inválida!");
+       return res.status(403).json({ msg: error.message });
+   }
+
+   try {
+        await tarea.deleteOne();
+        res.json({msg: "Tarefa removida com sucesso!"});
+   } catch (error) {
+        console.log(error);
+   }
+
+};
 
 const cambiarEstado = async (req, res) => {};
 
