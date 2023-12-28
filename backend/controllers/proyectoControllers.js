@@ -34,7 +34,13 @@ const obtenerProyecto = async (req, res) => {
         return res.status(401).json({msg: error.message});
     }
 
-    res.json(proyecto);
+    //Obter as tarefas do Projecto
+    const tareas = await Tarea.find().where('proyecto').equals(proyecto._id);
+
+    res.json({
+        proyecto,
+        tareas
+    });
 };
 
 const editarProyecto = async (req, res) => {
@@ -98,21 +104,6 @@ const agregarColaborador = async (req, res) => {};
 
 const eliminarColaborador = async (req, res) => {};
 
-const obtenerTareas = async (req, res) => {
-    //Obter o Id do projeto
-    const { id } = req.params;
-
-    //Buscar o pojeto na BD
-    const existeProyecto = await Proyecto.findById(id);
-    if (!existeProyecto) {
-        const error = new Error("Projecto não encontrado");
-        return res.status(404).json({msg: error.message});
-    }
-
-    //Tens que ser o criador do pojeto ou colaborador
-    const tareas = await Tarea.find().where('proyecto').equals(id)
-    res.json(tareas);
-};
 
 export {
     obtenerProyectos,
@@ -121,6 +112,5 @@ export {
     editarProyecto,
     eliminarProyecto,
     agregarColaborador,
-    eliminarColaborador,
-    obtenerTareas
+    eliminarColaborador
 }
