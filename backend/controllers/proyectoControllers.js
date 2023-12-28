@@ -65,7 +65,33 @@ const editarProyecto = async (req, res) => {
     }
 };
 
-const eliminarProyecto = async (req, res) => {};
+const eliminarProyecto = async (req, res) => {
+    //Identificar o prejecto
+    const { id } = req.params;
+
+    //Consultar se está na base de dados
+    const proyecto = await Proyecto.findById(id);
+    
+
+    //Verificar que o projecto exista
+    if (!proyecto){
+        const error = new Error("Projecto não encontrado :(");
+        return res.status(404).json({msg: error.message});
+    }
+
+    //para não poderer ver os projectos caso não seja o criador ou moderador
+    if (proyecto.creador.toSrting() !== req.usuario._id.toSrting()){
+        const error = new Error("Não tens permissão para aceder a este projeto");
+        return res.status(401).json({msg: error.message});
+    }
+
+    try {
+        await proyecto.deleteOne();
+        res.json({ msg: "Projecto eliminado com sucesso! "})
+    } catch (error) {
+        console.log(error); 
+    }
+};
 
 const agregarColaborador = async (req, res) => {};
 
