@@ -1,9 +1,9 @@
 
 function App() {
   return (
-      <div>
-       
-      </div>
+    <div className="App">
+      <h1>UpTask</h1>    
+    </div>
   )
 }
 
