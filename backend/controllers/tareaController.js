@@ -1,4 +1,32 @@
-const agregarTarea = async (req, res) => {};
+import Proyecto from "../models/Proyecto,js";
+import Tarea from "../models/Tarea";
+
+const agregarTarea = async (req, res) => {
+    const { proyecto } = rec.body;
+
+    //verificar se o projeccto existe
+    const existeProyecto = await Proyecto.findById(proyecto);
+
+    //caso o projecto não exista
+    if (!existeProyecto) {
+        const error = new Error('Projecto inexistente');
+        return res.status(404).json({ msg: error.message });
+    }
+
+    //comprovar se quem está a aceder, é o criador do projecto
+    if (existeProyecto.creador.toString() !== req.usuario._id.toString()) {
+        const error = new Error("Não tens permissão para adicionar tarefas");
+        return res.status(401).json({ msg: error.message });
+    }
+
+    //caso tudo o anterior passe (devolver a tarefa)
+    try {
+        const tareaAlmacenada = await Tarea.create(req.body);
+        res.json(tareaAlmacenada);
+    } catch (error) {
+        console.log(error)
+    }
+};
 
 const obtenerTarea = async (req, res) => {};
 
