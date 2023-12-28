@@ -16,13 +16,13 @@ const checkAuth = async (req, res, next) => {
                 );
 
             return next();
-        } catch (error) {
+        }   catch (error) {
             return res.status(404).json({msg: "Erro: Token expirado"})
         }
     }
     if (!token){
         const error = new Error("Token não é válida!");
-        res.status(401).json({ msg: error.message});
+        return res.status(401).json({ msg: error.message});
     }
 
     next();
