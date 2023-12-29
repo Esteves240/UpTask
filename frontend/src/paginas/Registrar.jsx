@@ -12,6 +12,7 @@ const Registrar = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
+        //revisar que todos os campos estejam preenchidos
         if([nombre, email, password, repetirPassword].includes('')) {
             setAlerta({
                 msg: 'Todos os campos são obrigatórios',
@@ -19,6 +20,25 @@ const Registrar = () => {
             })
             return
         }
+
+        if(password !== repetirPassword) {
+            setAlerta({
+                msg: 'As passwords são diferentes',
+                error: true
+            })
+            return
+        }
+
+        if(password.length < 6) {
+            setAlerta({
+                msg: 'A password deve ter pelo menos 6 caracteres',
+                error: true
+            })
+            return
+        }
+
+        setAlerta({})
+
     }
 
     const { msg } = alerta
