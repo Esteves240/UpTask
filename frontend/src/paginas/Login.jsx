@@ -1,4 +1,5 @@
 //rafce
+import { Link } from "react-router-dom"
 
 const Login = () => {
   return (
@@ -41,6 +42,17 @@ const Login = () => {
             />
 
         </form>
+
+        <nav className="lg:flex lg:justify-between">
+            <Link 
+                className="block text-center my-5 text-slate-500 uppercase text-sm"
+                to="/registrar"
+            >Não tens conta?</Link>
+            <Link 
+                className="block text-center my-5 text-slate-500 uppercase text-sm"
+                to="/olvide-password"
+            >Esqueceste-te da tua palavra-passe?</Link>
+        </nav>
     </>
   )
 }
