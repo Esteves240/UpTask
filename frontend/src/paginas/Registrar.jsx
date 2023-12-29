@@ -1,11 +1,27 @@
 import { useState} from 'react'
 import { Link } from "react-router-dom"
+import Alerta from '../components/Alerta.jsx'
 
 const Registrar = () => {
     const [nombre, setNobre] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [repetirPassword, setRepetirPassword] = useState('')
+    const [alerta, setAlerta] = useState({})
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        if([nombre, email, password, repetirPassword].includes('')) {
+            setAlerta({
+                msg: 'Todos os campos são obrigatórios',
+                error: true
+            })
+            return
+        }
+    }
+
+    const { msg } = alerta
 
   return (
     <>
@@ -13,7 +29,10 @@ const Registrar = () => {
         <span className="text-slate-700"> projectos</span>
         </h1>
 
-        <form className="my-10 bg-white shadow rounded-lg p-10">
+        <form 
+            className="my-10 bg-white shadow rounded-lg p-10"
+            onSubmit={handleSubmit}
+        >
               <div className="my-5">
                 <label 
                     className="uppercase text-gray-600 block text-xl font-bold"
@@ -77,8 +96,9 @@ const Registrar = () => {
                 className="bg-sky-700 mb-5 w-full py-3 text-white uppercase font-bold 
                 rounded hover:cursor-pointer hover:bg-sky-800 transition-colors"
             />
-
         </form>
+
+        {msg && <Alerta alerta={alerta} />}
 
         <nav className="lg:flex lg:justify-between">
             <Link 
