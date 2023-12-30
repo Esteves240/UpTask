@@ -14,8 +14,8 @@ const resgistrar = async (req, res) => {
     try{
         const usuario = new Usuario(req.body);
         usuario.token = generarId();
-        const usuarioAlmacenado = await usuario.save();
-        res.json(usuarioAlmacenado);
+        await usuario.save();
+        res.json({ msg: "Usuário criado com sucesso! Revisa o teu Email para confirmar a conta."});
     }catch (error){
         console.log(error)
     } 
